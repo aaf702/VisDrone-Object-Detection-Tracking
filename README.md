@@ -39,41 +39,6 @@ The recorded model results:
 
 These results are from the validation evaluation.
 
-## Project Structure
-
-```text
-VisDrone-Object-Detection-Tracking/
-├── weights/
-│   └── best.pt
-├── track_webcam.py
-├── detect_video.py
-├── train.py
-├── requirements.txt
-└── README.md
-```
-
-## Installation
-
-Install the required packages:
-
-```bash
-pip install -r requirements.txt
-```
-
-## Run Webcam Tracking
-
-```bash
-python track_webcam.py
-```
-
-## Run Video Tracking
-
-Place your video in the project directory as `test_video.mp4`, then run:
-
-```bash
-python detect_video.py
-```
-
 ## Model Weights
 
 The trained model is available in:
@@ -84,4 +49,3 @@ The trained model is available in:
 
 Dataset: VisDrone2019
 Model framework: Ultralytics YOLO
-Tracking algorithm: ByteTrack
