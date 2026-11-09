@@ -43,7 +43,7 @@ These results are from the validation evaluation.
 
 The trained model is available in:
 
-`weights/best.pt`
+`best.pt`
 
 ## Acknowledgment
 
