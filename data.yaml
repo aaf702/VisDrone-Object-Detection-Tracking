@@ -1,8 +1,6 @@
-path: C:/Users/fffrd/Desktop/VisDrone/VisDrone-YOLO
-
+path: ./VisDrone-YOLO
 train: images/train
 val: images/val
-
 nc: 11
 
 names:
