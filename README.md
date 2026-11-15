@@ -130,64 +130,6 @@ VisDrone-Object-Detection-Tracking/
 └── requirements.txt
 ```
 
----
-
-## Installation
-
-Install the required Python packages:
-
-```bash
-pip install -r requirements.txt
-```
-
----
-
-## Running the Algorithms
-
-### Object Detection
-
-```bash
-python detect.py
-```
-
-### Object Tracking
-
-```bash
-python track.py
-```
-
-Make sure the input video path is configured in the corresponding script.
-
-### IBVS
-
-Example:
-
-```python
-from ibvs import ibvs
-
-target = {
-    "box": [400, 200, 560, 360]
-}
-
-config = {
-    "fov": 60.0,
-    "area": 0.02,
-    "z": 25.0,
-    "lam": 0.8,
-    "theta": 55.0
-}
-
-commands, error = ibvs(
-    target,
-    image_width=960,
-    image_height=540,
-    cfg=config
-)
-
-print(commands)
-```
-
----
 
 ## Dataset
 
