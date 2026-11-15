@@ -13,7 +13,7 @@ model.train(
     patience=20,
     amp=True,
     seed=42,
-    project="/content/drive/MyDrive/Drone-Project/Results",
+    project="runs/train",
     name="YOLO11s",
     save=True,
     save_period=10,
