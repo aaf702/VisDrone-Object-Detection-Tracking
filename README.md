@@ -1,118 +1,62 @@
-
 # VisDrone Object Detection, Tracking and IBVS
 
 ## Project Overview
 
-This project focuses on computer vision and visual control for autonomous drone applications using the VisDrone2019 dataset.
+This project explores three computer vision and control techniques for drone applications using the VisDrone2019 dataset:
 
-The project contains three main algorithms:
+1. **YOLO11s:** Object detection in aerial images and videos.
+2. **ByteTrack:** Multi-object tracking across consecutive video frames.
+3. **IBVS:** Image-based visual servoing for calculating target-following motion commands.
 
-1. YOLO11s for Object Detection.
-2. ByteTrack for Multi-Object Tracking.
-3. Image-Based Visual Servoing (IBVS) for visual target-following control.
+## 1. YOLO11s – Object Detection
 
-The objective is to detect objects in aerial images, track them across video frames, and calculate motion commands based on the selected target's position in the camera image.
+YOLO11s is trained on the VisDrone2019 dataset to detect 11 object classes in aerial imagery.
 
----
+**Training Configuration**
 
-## 1. Object Detection - YOLO11s
-
-YOLO11s is used to detect objects in aerial images and videos.
-
-### Model Information
-
-- Model: YOLO11s
-- Dataset: VisDrone2019
-- Number of classes: 11
-- Training image size: 960
-- Training epochs: 100
-- Batch size: 8
-- Optimizer: AdamW
-
-### Detection Classes
-
-| ID | Class |
+| Parameter | Value |
 |---|---|
-| 0 | Pedestrian |
-| 1 | People |
-| 2 | Bicycle |
-| 3 | Car |
-| 4 | Van |
-| 5 | Truck |
-| 6 | Tricycle |
-| 7 | Awning-tricycle |
-| 8 | Bus |
-| 9 | Motor |
-| 10 | Others |
+| Model | YOLO11s |
+| Image Size | 960 |
+| Epochs | 100 |
+| Batch Size | 8 |
+| Optimizer | AdamW |
+| Number of Classes | 11 |
 
-### Model Weights
+**Detection Classes:** Pedestrian, People, Bicycle, Car, Van, Truck, Tricycle, Awning-tricycle, Bus, Motor, and Others.
 
-The trained model is provided as:
+The trained model weights are provided in `best.pt`.
 
-`best.pt`
+**Reported Validation Results**
 
----
+| Metric | Result |
+|---|---:|
+| Precision | 60.23% |
+| Recall | 48.23% |
+| mAP50 | 50.09% |
+| mAP50-95 | 30.22% |
 
-## 2. Multi-Object Tracking - ByteTrack
+## 2. ByteTrack – Multi-Object Tracking
 
-ByteTrack is used to associate detected objects across consecutive video frames.
+ByteTrack is used with YOLO11s detections to associate objects across consecutive frames.
 
-It assigns tracking IDs to detected objects and attempts to maintain their identities over time.
+It assigns tracking IDs and maintains object identities over time, including through some low-confidence detections.
 
-### Main Features
+Tracking parameters are configured in `bytetrack_custom.yaml`.
 
-- Multi-object tracking.
-- Persistent object IDs.
-- Association of detections between frames.
-- Customizable tracking thresholds.
+## 3. IBVS – Image-Based Visual Servoing
 
-### Configuration
+IBVS calculates drone motion commands using visual information extracted from the target's bounding box.
 
-The custom tracking parameters are stored in:
+The implementation uses three image features:
 
-`bytetrack_custom.yaml`
-
-The tracking implementation uses YOLO11s detections as input to ByteTrack.
-
----
-
-## 3. Image-Based Visual Servoing - IBVS
-
-IBVS is used to calculate camera-relative motion commands based on image features.
-
-The algorithm uses the selected target's bounding box to calculate:
-
-- Horizontal image position.
-- Vertical image position.
+- Horizontal target position.
+- Vertical target position.
 - Apparent target size.
-- Image feature error.
 
-An interaction matrix is then used to calculate motion commands that aim to reduce the image-space error.
+An interaction matrix is used to calculate motion commands that reduce the image-space error between the current and desired target features.
 
-### IBVS Inputs
-
-- Target bounding box.
-- Image width and height.
-- Camera field of view.
-- Desired target area.
-- Control gain.
-- Reference distance.
-
-### IBVS Outputs
-
-The function returns three project-specific motion command components:
-
-- `r`: First motion component.
-- `f`: Forward motion component.
-- `u`: Vertical motion component.
-
-The IBVS implementation is provided independently in:
-
-`ibvs.py`
-
-It calculates motion commands but does not directly control a physical drone by itself.
-
----
+The implementation uses a simplified translational IBVS model and returns three project-specific motion components: `r`, `f`, and `u`.
 
 ## Repository Structure
 
@@ -126,65 +70,19 @@ VisDrone-Object-Detection-Tracking/
 ├── detect.py
 ├── track.py
 ├── bytetrack_custom.yaml
-├── ibvs.py
-└── requirements.txt
+└── ibvs.py
 ```
-
 
 ## Dataset
 
 The project uses the VisDrone2019 dataset.
 
-The dataset is not included in this repository because of its size.
+The dataset is not included in this repository due to its size.
 
-The dataset must be prepared in YOLO format before training.
-
-Expected dataset structure:
-
-```text
-VisDrone-YOLO/
-│
-├── images/
-│   ├── train/
-│   └── val/
-│
-└── labels/
-    ├── train/
-    └── val/
-```
-
-Update the dataset path in `data.yaml` according to your local dataset location.
-
----
-
-## Reported Detection Results
-
-The current project README records the following validation metrics:
-
-| Metric | Result |
-|---|---:|
-| Precision | 60.23% |
-| Recall | 48.23% |
-| mAP50 | 50.09% |
-| mAP50-95 | 30.22% |
-
-These are the results reported for the trained YOLO11s model.
-
----
-
-## Technologies Used
+## Technologies
 
 - Python
 - Ultralytics YOLO11s
 - ByteTrack
 - NumPy
 - OpenCV
-- Image-Based Visual Servoing (IBVS)
-
----
-
-## Acknowledgments
-
-- VisDrone2019 Dataset
-- Ultralytics YOLO Framework
-- ByteTrack Multi-Object Tracking
