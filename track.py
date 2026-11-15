@@ -5,10 +5,11 @@ model = YOLO("best.pt")
 
 model.track(
     source="test_video.mp4",
-    tracker="bytetrack_custom.yaml",
+    tracker="bytetrack.yaml",
     imgsz=960,
-    conf=0.05,
+    conf=0.1,
     iou=0.5,
+    max_det=300,
     persist=True,
     save=True
 )
