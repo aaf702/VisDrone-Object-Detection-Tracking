@@ -1,48 +1,30 @@
-import math
-import numpy as np
+def ibvs(box, image_width, image_height):
 
+    if box is None:
+        return {"r": 0, "u": 0, "f": 0}
 
-def ibvs(target, image_width, image_height, cfg):
+    x1, y1, x2, y2 = box
 
-    x1, y1, x2, y2 = target["box"]
+    cx = (x1 + x2) / 2
+    cy = (y1 + y2) / 2
 
-    fy = (image_height / 2) / math.tan(
-        math.radians(cfg["fov"] / 2)
-    )
+    error_x = (cx - image_width / 2) / (image_width / 2)
+    error_y = (cy - image_height / 2) / (image_height / 2)
 
-    x = ((x1 + x2) / 2 - image_width / 2) / fy
-    y = ((y1 + y2) / 2 - image_height / 2) / fy
+    width_ratio = (x2 - x1) / image_width
 
-    area = (x2 - x1) * (y2 - y1)
+    desired_width = 0.20
 
-    rho = math.log(
-        math.sqrt(area / (image_width * image_height))
-    )
+    r = -0.5 * error_x
+    u = -0.5 * error_y
+    f = 0.5 * (desired_width - width_ratio)
 
-    rho_desired = math.log(math.sqrt(cfg["area"]))
+    r = max(-1, min(1, r))
+    u = max(-1, min(1, u))
+    f = max(-1, min(1, f))
 
-    error = np.array([
-        x,
-        y,
-        rho - rho_desired
-    ])
-
-    Z = cfg["z"] * math.exp(rho_desired - rho)
-
-    L = np.array([
-        [-1, 0, x],
-        [0, -1, y],
-        [0, 0, 1]
-    ])
-
-    vx, vy, vz = -cfg["lam"] * Z * (L @ error)
-
-    angle = math.radians(cfg["theta"])
-
-    commands = {
-        "r": float(vx),
-        "f": float(-vy * math.sin(angle) + vz * math.cos(angle)),
-        "u": float(-vy * math.cos(angle) - vz * math.sin(angle))
+    return {
+        "r": r,
+        "u": u,
+        "f": f
     }
-
-    return commands, error.tolist()
