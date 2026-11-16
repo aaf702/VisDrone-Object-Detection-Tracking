@@ -77,8 +77,7 @@ VisDrone-Object-Detection-Tracking/
 
 The project uses the VisDrone2019 dataset.
 
-The dataset is not included in this repository due to its size.
-
+[VisDrone_dataset](https://drive.google.com/drive/folders/1erKOEj20wv62MosCMr_eJHG200EBQ9lf?usp=sharing)
 ## 🎥 Project Demo
 
 Watch the project demonstration video:
