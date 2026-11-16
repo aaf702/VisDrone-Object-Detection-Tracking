@@ -79,10 +79,10 @@ The project uses the VisDrone2019 dataset.
 
 The dataset is not included in this repository due to its size.
 
-## Technologies
+## 🎥 Project Demo
 
-- Python
-- Ultralytics YOLO11s
-- ByteTrack
+Watch the project demonstration video:
+
+[▶️ Watch Project Demo](https://drive.google.com/file/d/1UE5Uap--_7_yeaEwG-Sv6xtPFhWmS7fs/view?usp=sharing)
 - NumPy
 - OpenCV
