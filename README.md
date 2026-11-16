@@ -84,5 +84,4 @@ The dataset is not included in this repository due to its size.
 Watch the project demonstration video:
 
 [▶️ Watch Project Demo](https://drive.google.com/file/d/1UE5Uap--_7_yeaEwG-Sv6xtPFhWmS7fs/view?usp=sharing)
-- NumPy
-- OpenCV
+
