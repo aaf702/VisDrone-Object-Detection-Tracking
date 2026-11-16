@@ -54,8 +54,6 @@ The implementation uses three image features:
 - Vertical target position.
 - Apparent target size.
 
-An interaction matrix is used to calculate motion commands that reduce the image-space error between the current and desired target features.
-
 The implementation uses a simplified translational IBVS model and returns three project-specific motion components: `r`, `f`, and `u`.
 
 ## Repository Structure
